@@ -26,6 +26,8 @@ Check the [Dockerfile](.docker-config/web/Dockerfile) for example usage.
 Container will run on port `8000` on localhost.
 Container will also have `composer` globally installed.
 
+By default, content is served from root folder. If you are using a framework, or your index.php file is in some other sub-folder, re-adjust [vhost config](.docker-config/web/vhost.conf) for your needs.
+
 ## db container
 
 db container is based on official MySQL Docker image.
