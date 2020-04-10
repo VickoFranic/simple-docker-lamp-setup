@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - '.docker-config/db:/var/tmp/'
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --init-file /var/tmp/init.sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  web:
+    build:
+      context: .docker-config/
+    volumes:
+      - '.:/var/www/html'
+      - './.docker-config/vhost.conf:/etc/apache2/sites-available/000-default.conf'
+    environment:
+      COMPOSER_ALLOW_XDEBUG: '0'
+    ports:
+      - 8000:80
+    container_name: web
